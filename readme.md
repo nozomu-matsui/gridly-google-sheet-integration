@@ -1,4 +1,5 @@
 # Gridly Google Sheets integration
+Friendly reminder about, you must have enabled the lambdas in your gridly account to use this integration
 
 # **Create a Google Cloud project** 
 A Google Cloud project is required to use Google Workspace APIs and build Google Workspace add-ons or apps. This project forms the basis for creating, enabling, and using all Google Cloud services, including managing APIs, enabling billing, adding and removing collaborators, and managing permissions.
