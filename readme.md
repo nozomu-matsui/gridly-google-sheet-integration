@@ -1,6 +1,18 @@
 # Gridly Google Sheets integration
 Friendly reminder about, you must have enabled the lambdas in your gridly account to use this integration
 
+## **Enable the Google API**
+
+To enable an API for your project:
+
+1. Go to the [API Console](https://console.developers.google.com/).
+2. From the projects list, select a project or create a new one.
+3. If the APIs &amp; services page isn&#39;t already open, open the console left side menu and select APIs &amp; services, and then select Library.
+4. Click the API you want to enable. If you need help finding the API, use the search field.
+5. Click ENABLE.
+
+Note: The process of enabling an API varies depending on the API. Some APIs will prompt you to accept their Terms of Service before you can enable them. Some APIs are in preview mode, meaning that they require special signup and whitelisting before you can use them. Others might ask for additional information, such as your organization&#39;s contact information and the name of the application you are developing. When more information is requested, it will not be shared outside of Google; it&#39;s used to help Google understand how the API is being used and as a secondary contact should we need to contact you regarding your use of the service.
+
 # **Create a Google Cloud project** 
 A Google Cloud project is required to use Google Workspace APIs and build Google Workspace add-ons or apps. This project forms the basis for creating, enabling, and using all Google Cloud services, including managing APIs, enabling billing, adding and removing collaborators, and managing permissions.
 
