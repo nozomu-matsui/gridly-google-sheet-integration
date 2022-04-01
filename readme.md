@@ -1,5 +1,5 @@
 # Gridly Google Sheets integration
-Friendly reminder about, you must have enabled the lambdas in your gridly account to use this integration
+Friendly reminder about, you must have enabled Lambda functions in your Gridly account to use this integration.
 
 ## **Enable the Google API**
 
