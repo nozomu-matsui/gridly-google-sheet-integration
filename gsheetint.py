@@ -6,7 +6,7 @@ import gridly_api_handler
 
 # define the scope
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('cred_customer.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
 client = gspread.authorize(creds)
 
 
