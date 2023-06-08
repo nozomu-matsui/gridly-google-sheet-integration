@@ -55,6 +55,9 @@ To obtain credentials for your service account:
 
 # Share the folder that contains your files
 Share the folder with the e-mail address you received for your service user.
+# Prepare your Grid
+You can use a blank Grid, because if you have a true in the "synchColumns", it will generate the columns automatically, but it is mandatory to have an enabled Record ID and Path columns.
+
 # Prepare your lambda zip
 1. Download or clone the files from git
 2. Install the required dependecies with pip by using the following command:   
