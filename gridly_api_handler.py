@@ -8,28 +8,30 @@ import time
 
 viewID = ""
 
-def importCSV(mycsv, sheetHeaders, _viewId, _gridlyApiKEy, synchColumns):
 
+def importCSV(mycsv, sheetHeaders, _viewId, _gridlyApiKEy, synchColumns, _ExcludedColumnName):
+    ExcludedColumnName = _ExcludedColumnName
     global viewId
     global gridlyApiKEy
     gridlyApiKEy = _gridlyApiKEy
     viewId = _viewId
 
     refreshView()
+
     while(view["gridStatus"] != "active"):
         time.sleep(30)
         refreshView()
+
     if synchColumns == "true":
-        synchHeaders(sheetHeaders)
+        synchHeaders(sheetHeaders, ExcludedColumnName)
         
     url = "https://api.gridly.com/v1/views/" + viewId + "/import"
 
     mycsv = str.encode(mycsv)
- 
+
     mp_encoder = MultipartEncoder(
         fields={
-        'file': ('addresses.csv',mycsv,'text/csv'),
-        'importRequest': ''
+        'file': ('addresses.csv',mycsv,'text/csv')
         }
         )
 
@@ -38,6 +40,7 @@ def importCSV(mycsv, sheetHeaders, _viewId, _gridlyApiKEy, synchColumns):
     'Content-Type': mp_encoder.content_type
     }
     importResponse = requests.request("POST", url, headers=headers, data=mp_encoder)
+    #print(importResponse.content)
     time.sleep(5)
 
 def refreshView():
@@ -61,19 +64,21 @@ def getGridlyHeaders():
     return columnNames
 
 
-def synchHeaders(sheetHeaders):
+def synchHeaders(sheetHeaders, ExcludedColumnName):
+    #print(ExcludedColumnName)
     gridlyHeaders = getGridlyHeaders()
     for sheetheader in sheetHeaders:
-        if sheetheader not in gridlyHeaders and sheetheader != "_recordId" and sheetheader != "_pathTag":
+        if sheetheader not in gridlyHeaders and sheetheader != "_recordId" and sheetheader != "_pathTag" and sheetheader != ExcludedColumnName:
             createGridlyHeader(sheetheader)
     refreshView()
 
 
 def createGridlyHeader(headerName):
     refreshView()
-    while(view["gridStatus"] != "active"):
-        time.sleep(30)
-        refreshView()
+    if "gridStatus" in view:
+        while(view["gridStatus"] != "active"):
+            time.sleep(30)
+            refreshView()
 
     url = "https://api.gridly.com/v1/views/" + viewId + "/columns"
     id = ''.join(filter(str.isalnum, headerName))
@@ -88,4 +93,4 @@ def createGridlyHeader(headerName):
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
+    #print(response.text)
