@@ -27,21 +27,22 @@ def importCSV(mycsv, sheetHeaders, _viewId, _gridlyApiKEy, synchColumns, _Exclud
         
     url = "https://api.gridly.com/v1/views/" + viewId + "/import"
 
-    mycsv = str.encode(mycsv)
+    
 
     mp_encoder = MultipartEncoder(
         fields={
         'file': ('addresses.csv',mycsv,'text/csv')
         }
-        )
+    )
 
     headers = {
     'Authorization': 'ApiKey ' + gridlyApiKEy,
     'Content-Type': mp_encoder.content_type
     }
     importResponse = requests.request("POST", url, headers=headers, data=mp_encoder)
-    #print(importResponse.content)
+    print(importResponse.text)
     time.sleep(5)
+
 
 def refreshView():
     url = "https://api.gridly.com/v1/views/" + viewId

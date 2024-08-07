@@ -1,7 +1,7 @@
 from locale import normalize
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import json, requests, csv
+import json, requests, csv, io
 import gridly_api_handler
 
 # define the scope
@@ -115,7 +115,7 @@ def pullSheet(event, context):
     viewId = event["viewId"]
     gridlyApiKey = event["gridlyApiKey"]
     getSheetAsCSV(spreadSheetName, viewId, gridlyApiKey, synchColumns, sheetUniqueIdColumn)
-    
+
 
 
 def pushSheet(event, context):
@@ -147,22 +147,20 @@ def json_to_csv(jsonFile, sheetUniqueIdColumn):
     keys = list(jsonFile[0].keys())
     global ExcludedColumnName
     ExcludedColumnName = keys[sheetUniqueIdColumn]
+    
     for rec in jsonFile:
         rec["_recordId"] = rec.pop(keys[sheetUniqueIdColumn])
-    #print(jsonFile)
-    csvData = ""
-    lines = 0
-    for record in jsonFile:
-        if lines == 0:
-            for key in jsonFile[0].keys():
-                csvData += key + "\t"
-                lines = 1
-            csvData = csvData[:-1]
-            csvData += "\n"  
-        for rec in record.values():      
-            csvData += str(rec) + "\t"
-        csvData = csvData[:-1]
-        csvData += "\n"
-      
-    return csvData
+    
+    # Create an in-memory string buffer
+    output = io.StringIO()
+    
+    # Create CSV writer for the string buffer
+    writer = csv.DictWriter(output, fieldnames=jsonFile[0].keys(), delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    writer.writeheader()
+    writer.writerows(jsonFile)
+    
+    # Get the CSV content as a string
+    csv_content = output.getvalue()
+    
+    return csv_content
 
